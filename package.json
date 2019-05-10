@@ -1,0 +1,14 @@
+{
+  "name": "nxt_servomotor_driver",
+  "version": "0.0.1",
+  "description": "Vode for controlling a Lego Technic NXT servo motor with integral optical encoder from a Raspberry Pi with Node JS.",
+  "author": "Ralph Hughes",
+  "dependencies": {
+    "pigpio": "1.2.2",
+    "node-pid-controller": "1.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ralphhughes/nxt_servomotor_driver/"
+  }
+}
