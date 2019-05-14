@@ -25,7 +25,7 @@ const watchEncoder = () => {
       let timeSinceLastTick = pigpio.tickDiff(lastTickA, tick);
       motorRPMA =  convertTickDeltaToRPM(timeSinceLastTick);
       if (pigpio.tickDiff(firstTick, tick) > 5e5) {
-	console.log(tick + '\t' + motorRPMA + '\t' + timeSinceLastTick + '\tA');
+	console.log(tick + '\t' + motorRPMA + '\t' + timeSinceLastTick + '\tA\t' + level);
       }
 
     }
@@ -36,7 +36,7 @@ const watchEncoder = () => {
       let timeSinceLastTick = pigpio.tickDiff(lastTickB, tick);
       motorRPMB =  convertTickDeltaToRPM(timeSinceLastTick);
       if (pigpio.tickDiff(firstTick, tick) > 5e5) {
-        console.log(tick + '\t' + motorRPMB + '\t' + timeSinceLastTick + '\tB');
+        console.log(tick + '\t' + motorRPMB + '\t' + timeSinceLastTick + '\tB\t' + level);
       }
     }
     lastTickB = tick;
