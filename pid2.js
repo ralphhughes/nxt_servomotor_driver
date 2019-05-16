@@ -47,11 +47,11 @@ watchEncoder();
 setInterval((function() {
   elapsedSeconds++;
   switch (elapsedSeconds) {
-    case 1: setPoint = 160; break;
+    case 1: setPoint = 60; break;
     case 4: setPoint = 0; break;
-    case 7: setPoint = 55; break;
+    case 7: setPoint = 160; break;
     case 10: setPoint = 0; break;
-    case 13: setPoint = 90; break;
+    case 13: setPoint = 100; break;
     case 16: setPoint = 0; break;
     case 18: process.exit(0); break;
     default: break;
@@ -62,7 +62,8 @@ setInterval((function() {
 
 
 function getMotorRPM() {
-  timeDelta = pigpio.tickDiff(timeLastTick, pigpio.getTick());
+  timeNow = pigpio.getTick();
+  timeDelta = pigpio.tickDiff(timeLastTick, timeNow);
   timeDeltaInSeconds = timeDelta / 1000000;
   ticksPerSecond = (numTicks - lastNumTicks) / timeDeltaInSeconds;
   rotationsPerSecond = ticksPerSecond / 720;
@@ -80,7 +81,7 @@ function getMotorRPM() {
   }
   console.error("timeLastTick: " + timeLastTick + "\ttimeDelta: " + timeDelta + "\ttickDelta: " + (numTicks - lastNumTicks));
   lastNumTicks = numTicks;
-  timeLastTick = pigpio.getTick();
+  timeLastTick = timeNow;
   return motorRPM;
 }
 
@@ -97,7 +98,11 @@ setInterval((function() {
   if (motorPWM < 0) {
     motorPWM = 0;
   }
-  motorB.pwmWrite(motorPWM >> 0); // convert to unsigned 32 bit number
+  if(motorPWM > 30) {
+    motorB.pwmWrite(motorPWM >> 0); // convert to unsigned 32 bit number
+  } else {
+    motorB.pwmWrite(0);
+  }
 
   console.log(((pigpio.getTick()-startTick) / 1e6) + "\t" + setPoint + "\t" + Math.round(motorRPM*10)/10 + "\t" + Math.round(feedback) + "\t" + motorPWM);
 }), 20);
